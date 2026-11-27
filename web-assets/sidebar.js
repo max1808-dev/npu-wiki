@@ -1,8 +1,8 @@
 (() => {
   function setupSidebars() {
     const layout = document.querySelector(".md-main__inner");
-    const article = layout?.querySelector(".md-content__inner");
-    if (!article || article.querySelector(".wiki-sidebar-controls")) return;
+    const title = document.querySelector(".md-header__title");
+    if (!layout || !title) return;
 
     const controls = document.createElement("div");
     controls.className = "wiki-sidebar-controls";
@@ -31,7 +31,6 @@
       const button = document.createElement("button");
       button.type = "button";
       button.dataset.sidebar = type;
-      button.textContent = `收起${label}`;
       button.setAttribute("aria-controls", sidebar.id);
       controls.append(button);
 
@@ -55,7 +54,7 @@
       updateLayout();
     }
 
-    if (controls.childElementCount) article.prepend(controls);
+    if (controls.childElementCount) title.after(controls);
   }
 
   setupSidebars();

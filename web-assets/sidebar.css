@@ -9,29 +9,29 @@
 
   .wiki-sidebar-controls {
     display: flex;
-    justify-content: flex-end;
-    flex-wrap: wrap;
+    flex: 0 0 auto;
     gap: .4rem;
-    margin-bottom: .6rem;
+    margin-inline-end: .6rem;
   }
 
   .wiki-sidebar-controls button {
     padding: .2rem .45rem;
-    border: 1px solid var(--md-default-fg-color--lightest);
+    border: 1px solid rgba(255, 255, 255, .35);
     border-radius: .2rem;
-    color: var(--md-default-fg-color--light);
+    color: var(--md-primary-bg-color);
     font-size: .65rem;
+    white-space: nowrap;
     cursor: pointer;
   }
 
   .wiki-sidebar-controls button:hover,
   .wiki-sidebar-controls button:focus-visible {
-    color: var(--md-accent-fg-color);
+    background-color: rgba(255, 255, 255, .15);
     border-color: currentColor;
   }
 
   .wiki-sidebar-controls button[aria-expanded="false"] {
-    background-color: var(--md-default-fg-color--lightest);
+    background-color: rgba(255, 255, 255, .35);
   }
 
   .md-sidebar--secondary[hidden] {
