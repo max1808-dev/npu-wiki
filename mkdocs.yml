@@ -8,6 +8,7 @@ hooks:
   - scripts/export_wiki.py
 theme:
   name: material
+  custom_dir: web-assets/overrides
   language: zh
   features:
     - navigation.indexes
