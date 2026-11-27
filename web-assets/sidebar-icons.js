@@ -32,11 +32,17 @@
       button.type = "button";
       button.dataset.sidebar = type;
       button.setAttribute("aria-controls", sidebar.id);
+      const icon = document.createElement("span");
+      icon.className = "wiki-sidebar-icon";
+      icon.setAttribute("aria-hidden", "true");
+      button.append(icon);
       controls.append(button);
 
       function updateLayout() {
         sidebar.hidden = desktop.matches && collapsed;
-        button.textContent = `${collapsed ? "展开" : "收起"}${label}`;
+        const hint = `${collapsed ? "展开" : "收起"}${label}`;
+        button.dataset.tooltip = hint;
+        button.setAttribute("aria-label", hint);
         button.setAttribute("aria-expanded", String(!sidebar.hidden));
       }
 

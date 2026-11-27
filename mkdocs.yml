@@ -32,6 +32,6 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
 
 extra_css:
-  - stylesheets/sidebar-header.css
+  - stylesheets/sidebar-icons.css
 extra_javascript:
-  - javascripts/sidebar-header.js
+  - javascripts/sidebar-icons.js

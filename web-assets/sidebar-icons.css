@@ -1,0 +1,103 @@
+.wiki-sidebar-controls {
+  display: none;
+}
+
+@media screen and (min-width: 60em) {
+  .md-grid {
+    max-width: 80rem;
+  }
+
+  .wiki-sidebar-controls {
+    display: flex;
+    flex: 0 0 auto;
+    gap: .4rem;
+    margin-inline-end: .6rem;
+  }
+
+  .wiki-sidebar-controls button {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: .25rem;
+    color: var(--md-primary-bg-color);
+    cursor: pointer;
+  }
+
+  .wiki-sidebar-controls button:hover,
+  .wiki-sidebar-controls button:focus-visible {
+    background-color: rgba(255, 255, 255, .15);
+  }
+
+  .wiki-sidebar-controls button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 1px;
+  }
+
+  .wiki-sidebar-icon {
+    position: relative;
+    width: 1rem;
+    height: .8rem;
+    overflow: hidden;
+    border: 2px solid currentColor;
+    border-radius: .17rem;
+  }
+
+  .wiki-sidebar-icon::before {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: .32rem;
+    border-inline-end: 2px solid currentColor;
+    background-color: rgba(255, 255, 255, .35);
+    content: "";
+  }
+
+  [data-sidebar="secondary"] .wiki-sidebar-icon {
+    transform: scaleX(-1);
+  }
+
+  [aria-expanded="false"] .wiki-sidebar-icon::before {
+    background-color: transparent;
+    opacity: .55;
+  }
+
+  .wiki-sidebar-controls button::after {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: calc(100% + .25rem);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: .25rem .45rem;
+    border-radius: .2rem;
+    background: #25283a;
+    color: #fff;
+    font-size: .65rem;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    content: attr(data-tooltip);
+  }
+
+  .wiki-sidebar-controls button:hover::after,
+  .wiki-sidebar-controls button:focus-visible::after {
+    opacity: 1;
+  }
+
+  .md-sidebar--secondary[hidden] {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 76.234375em) {
+  .wiki-sidebar-controls [data-sidebar="primary"] {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary[hidden] {
+    display: none;
+  }
+}
