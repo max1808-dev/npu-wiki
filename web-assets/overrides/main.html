@@ -4,8 +4,8 @@
   {{ super() }}
   {% if page %}
     <div class="wiki-visit-counter" aria-label="访问统计">
-      <span id="busuanzi_container_site_pv" style="display: none">站点浏览 <span id="busuanzi_value_site_pv"></span> 次</span>
-      <span id="busuanzi_container_page_pv" style="display: none">本页浏览 <span id="busuanzi_value_page_pv"></span> 次</span>
+      <span>站点浏览 <span id="busuanzi_value_site_pv">—</span> 次</span>
+      <span>本页浏览 <span id="busuanzi_value_page_pv">—</span> 次</span>
     </div>
     <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
   {% endif %}

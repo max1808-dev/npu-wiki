@@ -20,10 +20,6 @@
   pointer-events: none;
 }
 
-.wiki-visit-counter:not(:has(> span > span:not(:empty))) {
-  display: none;
-}
-
 @media screen and (min-width: 60em) {
   .md-grid {
     max-width: 80rem;
