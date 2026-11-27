@@ -1,4 +1,5 @@
 from collections import defaultdict
+from os import walk
 from pathlib import Path
 import posixpath
 import re
@@ -9,7 +10,7 @@ from markdown.extensions.toc import slugify_unicode
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / ".wiki-docs"
-SECTIONS = ("微架构", "图编译器", "SDK", "推理框架", "产品与市场")
+PROJECT_DIRS = {"scripts", "site", "web-assets"}
 ATTACHMENTS = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".pdf"}
 WIKI_LINK = re.compile(r"(?<!\\)(!?)\[\[([^\]\n]+)\]\]")
 CODE = re.compile(
@@ -19,20 +20,49 @@ CODE = re.compile(
 HOME = Path("总览.md")
 
 
+def wiki_files():
+    for directory, folders, names in walk(ROOT):
+        parent = Path(directory)
+        folders[:] = [
+            name for name in folders
+            if not name.startswith(".")
+            and not (parent == ROOT and name in PROJECT_DIRS)
+            and not (parent / name).is_symlink()
+        ]
+        for name in names:
+            path = parent / name
+            if name.startswith(".") or path == ROOT / "README.md" or path.is_symlink():
+                continue
+            if path.suffix.lower() in ATTACHMENTS | {".md"}:
+                yield path.relative_to(ROOT)
+
+
+def on_config(config):
+    def navigation(directory):
+        pages = []
+        sections = []
+        for path in sorted(directory.iterdir(), key=lambda path: path.name.casefold()):
+            if path.is_dir():
+                children = navigation(path)
+                if children:
+                    sections.append({path.name: children})
+            elif path.suffix.lower() == ".md":
+                relative = path.relative_to(DOCS)
+                if relative == Path("index.md"):
+                    pages.insert(0, {HOME.stem: relative.as_posix()})
+                else:
+                    pages.append({path.stem: relative.as_posix()})
+        return pages + sections
+
+    config.nav = navigation(DOCS)
+    return config
+
+
 def export():
-    files = [HOME, Path("Software Stack.md")]
-    for section in SECTIONS:
-        files.extend(
-            path.relative_to(ROOT)
-            for path in (ROOT / section).rglob("*")
-            if path.is_file()
-            and not path.is_symlink()
-            and not any(part.startswith(".") for part in path.relative_to(ROOT).parts)
-            and path.suffix.lower() in ATTACHMENTS | {".md"}
-        )
+    files = sorted(wiki_files())
     by_name = defaultdict(list)
-    for path in sorted(files):
-        key = path.stem if path.suffix == ".md" else path.name
+    for path in files:
+        key = path.stem if path.suffix.lower() == ".md" else path.name
         by_name[key.casefold()].append(path)
 
     unresolved = set()
@@ -47,7 +77,7 @@ def export():
         destination = Path("index.md") if source == HOME else source
         output = DOCS / destination
         output.parent.mkdir(parents=True, exist_ok=True)
-        if source.suffix != ".md":
+        if source.suffix.lower() != ".md":
             shutil.copyfile(ROOT / source, output)
             continue
 

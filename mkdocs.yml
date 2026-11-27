@@ -4,6 +4,8 @@ site_url: https://max1808-dev.github.io/npu-wiki/
 repo_url: https://github.com/max1808-dev/npu-wiki
 repo_name: max1808-dev/npu-wiki
 docs_dir: .wiki-docs
+hooks:
+  - scripts/export_wiki.py
 theme:
   name: material
   language: zh
