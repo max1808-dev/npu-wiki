@@ -39,6 +39,10 @@ def export():
     if DOCS.exists():
         shutil.rmtree(DOCS)
     DOCS.mkdir()
+    for asset, folder in (("sidebar.css", "stylesheets"), ("sidebar.js", "javascripts")):
+        asset_dir = DOCS / folder
+        asset_dir.mkdir()
+        shutil.copyfile(ROOT / "web-assets" / asset, asset_dir / asset)
     for source in files:
         destination = Path("index.md") if source == HOME else source
         output = DOCS / destination
