@@ -1,0 +1,6 @@
+/.obsidian/
+/.venv/
+/.wiki-docs/
+/site/
+__pycache__/
+.env

@@ -1,0 +1,32 @@
+site_name: NPU Wiki
+site_description: NPU 微架构、图编译器与软件栈知识库
+site_url: https://max1808-dev.github.io/npu-wiki/
+repo_url: https://github.com/max1808-dev/npu-wiki
+repo_name: max1808-dev/npu-wiki
+docs_dir: .wiki-docs
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.indexes
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - toc:
+      permalink: true
+      slugify: !!python/name:markdown.extensions.toc.slugify_unicode
+  - pymdownx.highlight
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
