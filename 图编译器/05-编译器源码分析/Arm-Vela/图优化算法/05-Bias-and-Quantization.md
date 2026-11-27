@@ -43,9 +43,9 @@ Bias:   [32]
 
 对第 `c` 个输出通道：
 
-\[
+$$
 Y_c = \sum_{h,w,i} X_{h,w,i}\times W_{h,w,i,c}+B_c
-\]
+$$
 
 其中：
 
@@ -89,9 +89,9 @@ Conv2D
 
 没有 Bias 时，数学上相当于：
 
-\[
+$$
 Y=X*W
-\]
+$$
 
 如果某个 NPU 执行路径要求 Bias 输入，Vela 可以创建全零 Bias：
 
@@ -121,15 +121,15 @@ Vela 对某些 INT16 输入路径还会使用 INT64 Bias。需要注意，这并
 
 量化整数表示的实数通常可写为：
 
-\[
+$$
 Real=(Quantized-ZeroPoint)\times Scale
-\]
+$$
 
 对于常见的整数 Conv2D，Bias 的量化尺度应与累加器尺度一致：
 
-\[
+$$
 S_{bias,c}=S_{ifm}\times S_{weight,c}
-\]
+$$
 
 其中 `c` 表示输出通道。若 Weight 使用 Per-Channel Quantization，每个通道的 Weight Scale 可以不同，因此 Bias Scale 也可能逐通道不同。
 
@@ -193,45 +193,45 @@ Channel 1: 550 - 50 = 500
 
 所以：
 
-\[
+$$
 Accumulator=[1000,500]
-\]
+$$
 
 ### 4.2 计算累加器的真实尺度
 
 Channel 0：
 
-\[
+$$
 S_0=0.02\times0.01=0.0002
-\]
+$$
 
 Channel 1：
 
-\[
+$$
 S_1=0.02\times0.02=0.0004
-\]
+$$
 
 对应真实数值：
 
-\[
+$$
 Y_0=1000\times0.0002=0.2
-\]
+$$
 
-\[
+$$
 Y_1=500\times0.0004=0.2
-\]
+$$
 
 ### 4.3 转换到 OFM 量化尺度
 
 OFM Scale 为 0.05，Zero Point 为 0：
 
-\[
+$$
 Q_0=0.2/0.05=4
-\]
+$$
 
-\[
+$$
 Q_1=0.2/0.05=4
-\]
+$$
 
 最终量化输出：
 
@@ -243,10 +243,10 @@ OFM = [4, 4]
 
 对于每个输出通道：
 
-\[
+$$
 Multiplier_c =
 \frac{S_{ifm}\times S_{weight,c}}{S_{ofm}}
-\]
+$$
 
 因此：
 
@@ -458,11 +458,11 @@ scales = [
 
 对应：
 
-\[
+$$
 Scale_c =
 \frac{Scale_{IFM}\times Scale_{Weight,c}}
 {Scale_{OFM}}
-\]
+$$
 
 随后将浮点缩放系数转换为硬件 Multiplier 和 Shift：
 
@@ -681,9 +681,9 @@ Output Channel = 16
 
 则：
 
-\[
+$$
 Bias=5\times3\times3=45
-\]
+$$
 
 生成：
 

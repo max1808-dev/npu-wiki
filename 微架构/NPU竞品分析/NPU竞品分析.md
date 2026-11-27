@@ -394,7 +394,9 @@ Arm Insights
 
 计算公式：
 
-\[ FPS_{max}=\frac{TOPS\times1000}{GOP/model} \]
+$$
+FPS_{max}=\frac{TOPS\times1000}{GOP/model}
+$$
 
 
 |产品|INT8 TOPS|MobileNetV2|ResNet50|YOLOv8n|YOLOv8s|

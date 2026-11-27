@@ -101,9 +101,9 @@ a, b, c, d, e, f
 
 卷积计算可写为：
 
-\[
+$$
 Y_o = \sum_{h,w,i} X_{h,w,i} \times W_{o,h,w,i}
-\]
+$$
 
 ### 2.2 Vela 内部先做 OHWI → HWIO
 
@@ -129,9 +129,9 @@ if op.type.is_depthwise_conv2d_op() or \
 
 `clone_and_reshape_tensor()` 中的 transpose 将普通四维卷积权重从：
 
-\[
+$$
 [O,H,W,I] \rightarrow [H,W,I,O]
-\]
+$$
 
 也就是：
 
@@ -186,12 +186,12 @@ Block 2: C16 ... C23
 
 新增的零权重不改变结果：
 
-\[
+$$
 \sum_{i=0}^{4} X_i W_i +
 X_5 \cdot 0 + X_6 \cdot 0 + X_7 \cdot 0
 =
 \sum_{i=0}^{4} X_i W_i
-\]
+$$
 
 Padding 让硬件能够使用规则的 Block 处理数据，但会增加编码前的权重体积。
 
@@ -290,28 +290,28 @@ if npu_block_type == NpuBlockType.ConvolutionMxN:
 
 #### Case A：IFM Depth = 64，3×3，INT8
 
-\[
+$$
 U_d = \frac{64}{\operatorname{roundup}(64,32)} = 1
-\]
+$$
 
-\[
+$$
 U_p =
 \frac{64}{\operatorname{roundup}(64,8)}
 \times
 \frac{9}{\operatorname{roundup}(9,4)}
 = 1 \times \frac{9}{12} = 0.75
-\]
+$$
 
 因此 Depth First 的估算利用率较高，选择 `DEPTH_FIRST`。
 
 #### Case B：IFM Depth = 10，3×3，INT8
 
-\[
+$$
 U_d = \frac{10}{\operatorname{roundup}(10,32)}
 = \frac{10}{32} = 0.3125
-\]
+$$
 
-\[
+$$
 U_p =
 \frac{10}{\operatorname{roundup}(10,8)}
 \times
@@ -319,7 +319,7 @@ U_p =
 =
 \frac{10}{16}\times\frac{9}{12}
 = 0.46875
-\]
+$$
 
 因此 Part Kernel First 的估算利用率较高，选择 `PART_KERNEL_FIRST`。
 
@@ -427,9 +427,9 @@ if len(weights.shape) == 2:
 
 概念上：
 
-\[
+$$
 [I,O] \rightarrow [1,1,I,O]
-\]
+$$
 
 可以把 FullyConnected 看成空间尺寸为 1×1 的矩阵乘/卷积形式，以复用相应编码路径。
 
