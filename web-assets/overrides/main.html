@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
-{% block footer %}
+{% block extrahead %}
+  {{ super() }}
+  {% if page %}
+    <style>{% include "visit-counter.css" %}</style>
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
   {{ super() }}
   {% if page %}
     <div class="wiki-visit-counter" aria-label="访问统计">
