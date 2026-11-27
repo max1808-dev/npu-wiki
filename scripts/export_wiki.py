@@ -39,7 +39,7 @@ def export():
     if DOCS.exists():
         shutil.rmtree(DOCS)
     DOCS.mkdir()
-    for asset, folder in (("sidebar.css", "stylesheets"), ("sidebar.js", "javascripts")):
+    for asset, folder in (("sidebar-header.css", "stylesheets"), ("sidebar-header.js", "javascripts")):
         asset_dir = DOCS / folder
         asset_dir.mkdir()
         shutil.copyfile(ROOT / "web-assets" / asset, asset_dir / asset)
